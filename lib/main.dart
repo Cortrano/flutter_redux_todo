@@ -1,36 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-
-class ListState {
-  final List<String> items;
-  ListState({this.items});
-
-  ListState.initialState() : items = [];
-}
-
-class AddAction {
-  final String input;
-  AddAction({this.input});
-}
-
-typedef AddItem(String text);
-
-class _ViewModel {
-  final AddItem addItemToList;
-  _ViewModel({this.addItemToList});
-}
-
-ListState reducer(ListState state, action) {
-  if (action is AddAction) {
-    return ListState(
-        items: []
-          ..addAll(state.items)
-          ..add(action.input));
-  }
-
-  return ListState(items: state.items);
-}
+import 'reducers.dart';
+import 'actions.dart';
+import 'viewmodel.dart';
 
 void main() => runApp(MyApp());
 
@@ -78,8 +51,8 @@ class ListInputState extends State<ListInput> {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<ListState, _ViewModel>(
-        converter: (store) => _ViewModel(
+    return StoreConnector<ListState, ViewModel>(
+        converter: (store) => ViewModel(
               addItemToList: (inputText) => store.dispatch(
                     AddAction(input: inputText),
                   ),
