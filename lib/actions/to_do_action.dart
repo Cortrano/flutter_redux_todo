@@ -2,9 +2,9 @@ import 'package:redux_list/data/models/to_do_item.dart';
 
 class AddItemAction {
   static int _id = 0;
-  final String item;
+  final String toDoItemBody;
 
-  AddItemAction(this.item) {
+  AddItemAction(this.toDoItemBody) {
     _id++;
   }
 
@@ -12,9 +12,23 @@ class AddItemAction {
 }
 
 class RemoveItemAction {
-  final ToDoItem item;
+  final ToDoItem toDoItem;
 
-  RemoveItemAction(this.item);
+  RemoveItemAction(this.toDoItem);
 }
 
 class RemoveItemsAction {}
+
+class GetItemsAction {}
+
+class LoadedItemsAction {
+  final List<ToDoItem> items;
+
+  LoadedItemsAction(this.items);
+}
+
+class ItemCompletedAction {
+  final ToDoItem toDoItem;
+
+  ItemCompletedAction(this.toDoItem);
+}

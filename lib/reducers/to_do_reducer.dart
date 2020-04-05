@@ -1,24 +1,42 @@
 import 'package:redux_list/app_state.dart';
 import 'package:redux_list/data/models/to_do_item.dart';
 import '../actions/to_do_action.dart';
+import 'package:redux/redux.dart';
 
-ToDoState toDoReducer(ToDoState state, action) {
-  if (action is AddItemAction) {
-    return ToDoState(
-        toToItems: []
-          ..addAll(state.toToItems)
-          ..add(ToDoItem(id: action.id, body: action.item)));
-  }
+Reducer<ToDoState> toDoReducer = combineReducers<ToDoState>([
+  TypedReducer<ToDoState, AddItemAction>(addItemReducer),
+  TypedReducer<ToDoState, RemoveItemAction>(removeItemReducer),
+  TypedReducer<ToDoState, RemoveItemsAction>(removeItemsReducer),
+  TypedReducer<ToDoState, LoadedItemsAction>(loadItemsReducer),
+  TypedReducer<ToDoState, ItemCompletedAction>(itemCompletedReducer),
+]);
 
-  if (action is RemoveItemAction) {
-    return ToDoState(
-        toToItems:
-            List.unmodifiable(List.from(state.toToItems)..remove(action.item)));
-  }
+ToDoState addItemReducer(ToDoState state, AddItemAction action) {
+  return ToDoState(
+      toDoItems: []
+        ..addAll(state.toDoItems)
+        ..add(ToDoItem(id: action.id, body: action.toDoItemBody)));
+}
 
-  if (action is RemoveItemsAction) {
-    return ToDoState(toToItems: List.unmodifiable([]));
-  }
+ToDoState removeItemReducer(ToDoState state, RemoveItemAction action) {
+  return ToDoState(
+      toDoItems: List.unmodifiable(
+          List.from(state.toDoItems)..remove(action.toDoItem)));
+}
 
-  return state;
+ToDoState removeItemsReducer(ToDoState state, RemoveItemsAction action) {
+  return ToDoState(toDoItems: List.unmodifiable([]));
+}
+
+ToDoState loadItemsReducer(ToDoState state, LoadedItemsAction action) {
+  return ToDoState(toDoItems: action.items);
+}
+
+ToDoState itemCompletedReducer(ToDoState state, ItemCompletedAction action) {
+  return ToDoState(
+      toDoItems: state.toDoItems
+          .map((item) => item.id == action.toDoItem.id
+              ? item.copyWith(completed: !item.completed)
+              : item)
+          .toList());
 }

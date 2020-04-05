@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_list/actions/list_action.dart';
 import 'package:redux_list/app_state.dart';
+import 'package:redux_list/data/models/item.dart';
 
 class ListInput extends StatefulWidget {
   @override
@@ -32,14 +33,14 @@ class ViewList extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel.create(store),
       builder: (context, _ViewModel viewModel) => Column(
-            children: viewModel.items.map((i) => ListTile(title: Text(i))).toList(),
+            children: viewModel.items.map((i) => ListTile(title: Text(i.body))).toList(),
           ),
     );
   }
 }
 
 class _ViewModel {
-  final List<String> items;
+  final List<Item> items;
   final Function onAddItem;
   _ViewModel({this.items, this.onAddItem});
 

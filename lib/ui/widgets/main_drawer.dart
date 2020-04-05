@@ -27,12 +27,6 @@ class MainDrawer extends StatelessWidget {
             title: Text('Redux ToDo'),
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.add_circle_outline),
-            //onTap: () => {Navigator.of(context).pushReplacementNamed(ToDoPage.route)},
-            title: Text('Redux Counter'),
-          ),
-          Divider(),
         ],
       ),
     );

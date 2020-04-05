@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:redux_list/data/models/item.dart';
 import 'package:redux_list/data/models/to_do_item.dart';
 
 class AppState {
@@ -19,16 +20,21 @@ class AppState {
 }
 
 class ListState {
-  final List<String> items;
+  final List<Item> items;
   ListState({this.items});
 
   ListState.initial() : items = [];
 }
 
 class ToDoState {
-  final List<ToDoItem> toToItems;
-  ToDoState({this.toToItems});
+  final List<ToDoItem> toDoItems;
+  const ToDoState({this.toDoItems});
 
-  //ToDoState.initialState() : toToItems = [];
-  ToDoState.initial() : toToItems = List.unmodifiable(<ToDoItem>[]);
+  ToDoState.initial() : toDoItems = List.unmodifiable(<ToDoItem>[]);
+
+  ToDoState.fromJson(Map json)
+      : toDoItems =
+            (json['items'] as List).map((i) => ToDoItem.fromJson(i)).toList();
+
+  Map toJson() => {'items': toDoItems};
 }

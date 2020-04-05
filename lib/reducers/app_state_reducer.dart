@@ -6,6 +6,5 @@ AppState appReducer(AppState state, action) {
   return AppState(
     listState: listReducer(state.listState, action),
     toDoState: toDoReducer(state.toDoState, action),
-    //actualsState: actualsReducer(state.actualsState, action),
   );
 }
