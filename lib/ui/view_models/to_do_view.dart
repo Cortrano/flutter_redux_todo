@@ -5,6 +5,7 @@ import 'package:redux_list/data/models/to_do_item.dart';
 import 'package:redux_list/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux_list/ui/widgets/add_item_widget.dart';
+import 'package:redux_list/ui/widgets/item_list_widget.dart';
 import 'package:redux_list/ui/widgets/remove_items_button.dart';
 
 class ToDoView extends StatelessWidget {
@@ -16,39 +17,15 @@ class ToDoView extends StatelessWidget {
         children: <Widget>[
           AddItemWidget(viewModel.onAddItem),
           Expanded(
-            child: ItemListWidget(viewModel),
+            child: ItemListWidget(
+              viewModel.items,
+              viewModel.onRemoveItem,
+              viewModel.onCompleted,
+            ),
           ),
           RemoveItemsButton(viewModel.onRemoveItems),
         ],
       ),
-    );
-  }
-}
-
-class ItemListWidget extends StatelessWidget {
-  final _ViewModel model;
-
-  ItemListWidget(this.model);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: model.items
-          .map((ToDoItem item) => ListTile(
-                title: Text(item.body),
-                leading: Checkbox(
-                  value: item.completed,
-                  onChanged: (b) {
-                    print('lol');
-                    model.onCompleted(item);
-                  },
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => model.onRemoveItem(item),
-                ),
-              ))
-          .toList(),
     );
   }
 }
@@ -74,7 +51,7 @@ class _ViewModel {
     }
 
     _onRemoveItem(ToDoItem item) {
-      store.dispatch(RemoveItemAction(item));
+      store.dispatch(RemoveItemAction(item.id));
     }
 
     _onRemoveItems() {
@@ -82,7 +59,7 @@ class _ViewModel {
     }
 
     _onCompleted(ToDoItem item) {
-      store.dispatch(ItemCompletedAction(item));
+      store.dispatch(ItemCompletedAction(item.id));
     }
 
     return _ViewModel(

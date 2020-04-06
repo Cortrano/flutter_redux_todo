@@ -12,9 +12,15 @@ class AddItemAction {
 }
 
 class RemoveItemAction {
-  final ToDoItem toDoItem;
+  final int id;
 
-  RemoveItemAction(this.toDoItem);
+  RemoveItemAction(this.id);
+}
+
+class ItemCompletedAction {
+  final int id;
+
+  ItemCompletedAction(this.id);
 }
 
 class RemoveItemsAction {}
@@ -27,8 +33,3 @@ class LoadedItemsAction {
   LoadedItemsAction(this.items);
 }
 
-class ItemCompletedAction {
-  final ToDoItem toDoItem;
-
-  ItemCompletedAction(this.toDoItem);
-}
