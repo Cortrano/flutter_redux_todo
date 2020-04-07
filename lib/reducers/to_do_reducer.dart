@@ -15,7 +15,7 @@ ToDoState addItemReducer(ToDoState state, AddItemAction action) {
   return ToDoState(
       toDoItems: []
         ..addAll(state.toDoItems)
-        ..add(ToDoItem(id: action.id, body: action.toDoItemBody)));
+        ..add(ToDoItem(id: action.id, body: action.item.body)));
 }
 
 ToDoState removeItemReducer(ToDoState state, RemoveItemAction action) {
@@ -26,9 +26,11 @@ ToDoState removeItemReducer(ToDoState state, RemoveItemAction action) {
 }
 
 ToDoState itemCompletedReducer(ToDoState state, ItemCompletedAction action) {
+  final existingToDoIndex = state.toDoItems.indexWhere((item) => item.id == action.id);
+  final existingToDo = state.toDoItems[existingToDoIndex];
   return ToDoState(
       toDoItems: state.toDoItems
-          .map((item) => item.id == action.id
+          .map((item) => item.id == existingToDo.id
               ? item.copyWith(completed: !item.completed)
               : item)
           .toList());

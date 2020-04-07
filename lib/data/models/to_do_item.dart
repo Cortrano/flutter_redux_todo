@@ -1,30 +1,31 @@
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 class ToDoItem {
-  final int id;
+  final String id;
   final String body;
   final bool completed;
 
   ToDoItem({
-    @required this.id,
+    this.id,
     @required this.body,
     this.completed = false,
   });
 
-  ToDoItem copyWith({int id, String body, bool completed}) {
+  ToDoItem copyWith({String id, String body, bool completed}) {
     return ToDoItem(
-      id: id ?? this.id,
+      id: Uuid().v4() ?? this.id,
       body: body ?? this.body,
       completed: completed ?? this.completed,
     );
   }
 
-  ToDoItem.fromJson(Map json)
+  ToDoItem.fromJson(Map<String, dynamic> json)
       : body = json['body'],
         id = json['id'],
         completed = json['completed'];
 
-  Map toJson() => {
+  Map<String, dynamic> toJson() => {
     'id' : (id),
     'body' : body,
     'completed' : completed,

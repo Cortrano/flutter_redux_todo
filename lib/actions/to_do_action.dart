@@ -1,24 +1,25 @@
 import 'package:redux_list/data/models/to_do_item.dart';
+import 'package:uuid/uuid.dart';
 
 class AddItemAction {
-  static int _id = 0;
-  final String toDoItemBody;
+  static String _id;
+  final ToDoItem item;
 
-  AddItemAction(this.toDoItemBody) {
-    _id++;
+  AddItemAction(this.item){
+    _id = Uuid().v4();
   }
 
-  int get id => _id;
+  String get id => _id;
 }
 
 class RemoveItemAction {
-  final int id;
+  final String id;
 
   RemoveItemAction(this.id);
 }
 
 class ItemCompletedAction {
-  final int id;
+  final String id;
 
   ItemCompletedAction(this.id);
 }

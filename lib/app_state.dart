@@ -31,10 +31,4 @@ class ToDoState {
   const ToDoState({this.toDoItems});
 
   ToDoState.initial() : toDoItems = List.unmodifiable(<ToDoItem>[]);
-
-  ToDoState.fromJson(Map json)
-      : toDoItems =
-            (json['items'] as List).map((i) => ToDoItem.fromJson(i)).toList();
-
-  Map toJson() => {'items': toDoItems};
 }
