@@ -1,5 +1,4 @@
 import 'package:redux_list/app_state.dart';
-import 'package:redux_list/data/models/to_do_item.dart';
 import '../actions/to_do_action.dart';
 import 'package:redux/redux.dart';
 
@@ -15,19 +14,20 @@ ToDoState addItemReducer(ToDoState state, AddItemAction action) {
   return ToDoState(
       toDoItems: []
         ..addAll(state.toDoItems)
-        ..add(ToDoItem(id: action.id, body: action.item.body)));
+        ..add(action.item));
 }
 
 ToDoState removeItemReducer(ToDoState state, RemoveItemAction action) {
-  final existingToDoIndex = state.toDoItems.indexWhere((item) => item.id == action.id);
+  final existingToDoIndex =
+      state.toDoItems.indexWhere((item) => item.id == action.id);
   return ToDoState(
       toDoItems: List.unmodifiable(
           List.from(state.toDoItems)..removeAt(existingToDoIndex)));
 }
 
 ToDoState itemCompletedReducer(ToDoState state, ItemCompletedAction action) {
-  final existingToDoIndex = state.toDoItems.indexWhere((item) => item.id == action.id);
-  final existingToDo = state.toDoItems[existingToDoIndex];
+  final existingToDo =
+      state.toDoItems.firstWhere((item) => item.id == action.id);
   return ToDoState(
       toDoItems: state.toDoItems
           .map((item) => item.id == existingToDo.id
@@ -43,4 +43,3 @@ ToDoState removeItemsReducer(ToDoState state, RemoveItemsAction action) {
 ToDoState loadItemsReducer(ToDoState state, LoadedItemsAction action) {
   return ToDoState(toDoItems: action.items);
 }
-

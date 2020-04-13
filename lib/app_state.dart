@@ -30,5 +30,5 @@ class ToDoState {
   final List<ToDoItem> toDoItems;
   const ToDoState({this.toDoItems});
 
-  ToDoState.initial() : toDoItems = List.unmodifiable(<ToDoItem>[]);
+  ToDoState.initial() : toDoItems = <ToDoItem>[];
 }
