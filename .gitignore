@@ -107,6 +107,9 @@ unlinked_spec.ds
 # Coverage
 coverage/
 
+# Web related
+lib/generated_plugin_registrant.dart
+
 # Symbols
 app.*.symbols
 
